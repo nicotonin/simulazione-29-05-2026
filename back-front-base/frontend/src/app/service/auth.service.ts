@@ -48,26 +48,27 @@ export class AuthService {
   );
 
   login(email: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
-      .pipe(
-        tap(res => {
-          this.jwtSrv.setToken(res.token);
-          this._currentUser = res.user;
-          this._currentUser$.next(res.user);
-        }),
-        map(res => res.user)
-      );
-  }
+  return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password })
+    .pipe(
+      tap(res => {
+        this.jwtSrv.setToken(res.token);
+        this._currentUser = res.user;
+        this._currentUser$.next(res.user);
+      }),
+      map(res => res.user)
+    );
+}
 
-  register(user: {
+register(user: {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }) {
-  const {...payload } = user;
-
-  return this.http.post<User>(`${environment.apiUrl}/register`, payload);
+  return this.http.post<User>(
+    `${environment.apiUrl}/auth/register`,
+    user
+  );
 }
 
   logout() {
