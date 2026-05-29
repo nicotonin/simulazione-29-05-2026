@@ -1,122 +1,224 @@
+
+/* ===== GLOBAL PAGE ===== */
 .page {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f9fb;
-  font-family: 'Hanken Grotesk', sans-serif;
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+  padding: 16px;
+  font-family: 'Inter', sans-serif;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
-  width: 420px;
-  background: white;
-  border: 1px solid #e2e8f0;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 18px;
   padding: 40px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-/* TITLE */
+/* ===== TYPO ===== */
 h1 {
   font-size: 28px;
-  margin-bottom: 6px;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   font-size: 14px;
-  color: #64748b;
-  margin-bottom: 24px;
+  color: #777;
+  margin-bottom: 25px;
 }
 
-/* LABEL */
+/* ===== LABEL ===== */
 label {
-  display: block;
-  margin-top: 14px;
-  margin-bottom: 6px;
   font-size: 13px;
-  color: #64748b;
+  color: #444;
+  margin-top: 12px;
+  display: block;
 }
 
-/* INPUT */
+/* ===== INPUT ===== */
 .input-box {
   display: flex;
   align-items: center;
-  border: 1px solid #cbd5e1;
-  padding: 10px;
-  gap: 8px;
+  background: #f6f6f6;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+.input-box:focus-within {
+  border-color: #e53935;
   background: #fff;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
+}
+
+.icon {
+  margin-right: 8px;
+  font-size: 14px;
+  opacity: 0.6;
 }
 
 .input-box input {
   border: none;
   outline: none;
+  background: transparent;
   width: 100%;
   font-size: 14px;
+  color: #333;
 }
 
-.icon {
-  color: #64748b;
-}
-
-/* ERROR */
+/* ===== ERROR ===== */
 .error {
-  margin-top: 10px;
-  color: #b91c1c;
+  background: rgba(229, 57, 53, 0.08);
+  color: #e53935;
+  padding: 10px;
+  border-radius: 10px;
   font-size: 13px;
+  margin-top: 12px;
 }
 
-/* ROW */
+/* ===== ROW ===== */
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .row a {
-  color: #00327d;
+  color: #e53935;
   text-decoration: none;
 }
 
-/* CHECKBOX */
+/* ===== CHECKBOX ===== */
 .remember {
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #666;
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 button {
   width: 100%;
   margin-top: 20px;
   padding: 12px;
-  background: #00327d;
+  background: #e53935;
   color: white;
   border: none;
-  cursor: pointer;
+  border-radius: 12px;
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 button:hover {
-  background: #0047ab;
+  background: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(229, 57, 53, 0.2);
 }
 
 button:disabled {
-  opacity: 0.6;
+  background: #ccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 .footer {
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 18px;
   font-size: 13px;
+  text-align: center;
+  color: #666;
 }
 
 .footer a {
-  color: #00327d;
+  color: #e53935;
   font-weight: 600;
   text-decoration: none;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE DESIGN */
+/* ========================= */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .card {
+    padding: 28px;
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .page {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  .input-box {
+    padding: 12px;
+  }
+
+  button {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
 }

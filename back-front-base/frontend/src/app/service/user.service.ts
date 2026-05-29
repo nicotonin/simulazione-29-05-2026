@@ -9,8 +9,7 @@ import { environment } from '../../environments/environment';
 export class UserService {
   protected http = inject(HttpClient);
 
-  list(role:string) {
-    return this.http.get<User[]>('${environment.apiUrl}/users',{params:{role}});
+  list() {
+    return this.http.get<User[]>(`${environment.apiUrl}/users`);
   }
-
 }

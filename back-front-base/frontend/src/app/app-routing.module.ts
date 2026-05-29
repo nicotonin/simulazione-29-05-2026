@@ -4,26 +4,34 @@ import { LoginComponent } from './page/login/login.component';
 import { RegisterComponent } from './page/register/register.component';
 import { HomeComponent } from './page/home/home.component';
 import { authGuard } from './utils/auth.guard';
+import { loginRedirectGuard } from './utils/loginRedirectGuard';
+
 
 const routes: Routes = [
+
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [loginRedirectGuard]
   },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+
   {
     path: 'register',
     component: RegisterComponent
   },
+
   {
     path: 'home',
-    canActivate:[authGuard],
+    canActivate: [authGuard],
     component: HomeComponent
+  },
+
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
+
 ];
 
 @NgModule({

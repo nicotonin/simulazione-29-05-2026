@@ -1,19 +1,49 @@
-<nav class="navbar bg-dark navbar-expand mb-3" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="nabar-brand" [routerLink]="['/home']">ITS-CLASS</a>
-    <div class="collapse navbar-collapse">
-    </div>
-    <ul class="navbar-nav me-3">
-      <app-nav-user
-        *ngIf="(currentUser$ | async) as currentUser; else loginButton"
-        (logout)="logout()"
-        [user]="currentUser"
-        ></app-nav-user>
-      <ng-template #loginButton>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/login']">Login</a>
-        </li>
-      </ng-template>
+<nav class="app-navbar">
+
+  <div class="container">
+
+    <!-- BRAND -->
+    <a class="brand" [routerLink]="['/delivery']">
+      🚚 ITS DELIVERY
+    </a>
+
+    <!-- LINKS -->
+    <ul class="nav-links">
+
+      <li>
+        <a routerLink="/delivery">Delivery</a>
+      </li>
+
+      <li>
+        <a routerLink="/customer">Customer</a>
+      </li>
+
+      <li>
+        <a routerLink="/analytics">Analytics</a>
+      </li>
+
     </ul>
+
+    <!-- USER -->
+    <div class="user-area">
+
+      <ng-container *ngIf="(currentUser$ | async) as currentUser; else loginBtn">
+
+        <app-nav-user
+          [user]="currentUser"
+          (logout)="logout()"
+        ></app-nav-user>
+
+      </ng-container>
+
+      <ng-template #loginBtn>
+        <a class="login-btn" routerLink="/login">
+          Login
+        </a>
+      </ng-template>
+
+    </div>
+
   </div>
+
 </nav>

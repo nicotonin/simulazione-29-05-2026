@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { BehaviorSubject, catchError, of, switchMap } from 'rxjs';
 import { AuthService } from '../../service/auth.service';
-import { RequestService } from '../../service/request.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddRequestModal } from '../../components/add-request-modal/add-request-modal';
+import { FormBuilder, Validators } from '@angular/forms';
+import { TrackingService } from '../../service/tracking.service';
 
 @Component({
   selector: 'app-home',
@@ -13,97 +13,62 @@ import { AddRequestModal } from '../../components/add-request-modal/add-request-
 })
 export class HomeComponent {
 
-  protected requestService = inject(RequestService);
-  protected authSrv = inject(AuthService);
+  private fb = inject(FormBuilder);
+  private trackingSrv = inject(TrackingService);
 
-  private modalService = inject(NgbModal);
+  loading = false;
 
-  refresh$ = new BehaviorSubject<void>(undefined);
+  trackingError = '';
 
+  trackingResult: any = null;
 
-   request$ = this.authSrv.isAuthenticated$.pipe(
-
-    switchMap(isAuth => {
-
-      if (!isAuth) return of([]);
-
-      return this.refresh$.pipe(
-
-        switchMap(() =>
-          this.requestService.list().pipe(
-
-            catchError(err => {
-              console.error(err);
-              return of([]);
-            })
-
-          )
-        )
-
-      );
-    })
-  );
-
-  openAdd() {
-
-    const modalRef = this.modalService.open(AddRequestModal);
-
-    modalRef.result.then((result) => {
-
-      this.requestService.add(result).subscribe(() => {
-
-        this.refresh$.next();
-
-      });
-
-    }).catch(() => {});
-  }
-
-
-  deleteRequest(id: string) {
-
-  if (!confirm('Vuoi eliminare questa richiesta?')) return;
-
-  this.requestService.delete(id).subscribe({
-    next: (res) => {
-      console.log('DELETE OK', res);
-      this.refresh$.next();
-    },
-    error: (err) => {
-      console.error('DELETE ERROR', err);
-    }
+  trackingForm = this.fb.group({
+    chiavediTracking: ['', Validators.required],
+    dataDiRitiro: ['', Validators.required]
   });
-}
 
+  track() {
 
-  approveRequest(id: string) {
+    if (this.trackingForm.invalid) {
 
-    this.requestService.approveRequest(id).subscribe(() => {
-      this.refresh$.next();
+      this.trackingForm.markAllAsTouched();
+
+      return;
+    }
+
+    this.loading = true;
+
+    this.trackingError = '';
+
+    this.trackingResult = null;
+
+    this.trackingSrv.track({
+      chiavediTracking:
+        this.trackingForm.value.chiavediTracking!,
+
+      dataDiRitiro:
+        this.trackingForm.value.dataDiRitiro!
+    })
+    .subscribe({
+
+      next: (res) => {
+
+        this.trackingResult = res;
+
+        this.loading = false;
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+        this.loading = false;
+
+        this.trackingError =
+          err?.error?.message ||
+          'Spedizione non trovata';
+      }
     });
   }
-
-
-  editRequest(request: any) {
-
-    const modalRef = this.modalService.open(AddRequestModal);
-
-    modalRef.componentInstance.dataInizio = request.dataInizio;
-    modalRef.componentInstance.dataFine = request.dataFine;
-    modalRef.componentInstance.categoriaId = request.categoriaId;
-
-    modalRef.result.then(result => {
-
-      this.requestService.update(request.id, result).subscribe(() => {
-        this.refresh$.next();
-      });
-
-    }).catch(() => {});
-  }
-
-  rejectRequest(id: string) {
-  this.requestService.rejectRequest(id).subscribe(() => {
-    this.refresh$.next();
-  });
-}
+  
 }

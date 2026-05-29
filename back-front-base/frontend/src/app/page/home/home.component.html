@@ -1,51 +1,110 @@
-<div class="page">
+<div class="tracking-page">
 
-  <h1>Richieste</h1>
-  <p>Scegli una richiesta per iniziare</p>
-  <button class="btn btn-primary" (click)="openAdd()">
-      + Aggiungi richiesta
-  </button>
+  <!-- HERO -->
+  <section class="hero">
 
-  <div class="category-card" *ngFor="let r of request$ | async">
+    <div class="hero-content">
 
-  <div class="category-desc">
-     {{ r.role1ID.firstName }} {{ r.role1ID.lastName }}
-  </div>
+      <div class="logo">
+        🚚 FastDelivery
+      </div>
 
+      <h1>Traccia la tua spedizione</h1>
 
-  <div class="category-desc">
-    {{ r.dataInizio |date:"medium"}}
-  </div>
+      <p>
+        Inserisci la chiave di tracking e la data di ritiro
+        per verificare lo stato della consegna.
+      </p>
 
-  <div class="category-desc">
-    {{ r.dataFine |date:"medium"}}
-  </div>
+    </div>
 
-  <div class="category-desc">
-    {{ r.stato }}
-  </div>
+  </section>
 
-  <!-- ACTIONS -->
-  <div class="mt-2 d-flex gap-2"
-     *ngIf="r.stato === 'In attesa'">
+  <!-- TRACKING CARD -->
+  <section class="tracking-section">
 
-    <button class="btn btn-sm btn-warning"
-            (click)="editRequest(r)">
-      Modifica
-    </button>
+    <div class="tracking-card">
 
-    <button class="btn btn-sm btn-danger"
-            (click)="deleteRequest(r.id)">
-      Elimina
-    </button>
+      <h2>Tracking spedizione</h2>
 
-    <button class="btn btn-sm btn-success"
-            (click)="approveRequest(r.id)">
-      Approva
-    </button>
+      <form [formGroup]="trackingForm" (ngSubmit)="track()">
 
-  </div>
+        <!-- TRACKING -->
+        <label>Chiave di tracking</label>
 
-</div>
+        <div class="input-box">
+          <span class="icon">📦</span>
+          <input
+            type="text"
+            formControlName="chiavediTracking"
+            placeholder="TRK-123456789"
+          >
+        </div>
+
+        <!-- DATA -->
+        <label>Data di ritiro</label>
+
+        <div class="input-box">
+          <span class="icon">📅</span>
+          <input
+            type="date"
+            formControlName="dataDiRitiro"
+          >
+        </div>
+
+        <!-- ERROR -->
+        <div class="error" *ngIf="trackingError">
+          {{ trackingError }}
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit" [disabled]="loading">
+
+          <span *ngIf="!loading">
+            Verifica spedizione →
+          </span>
+
+          <span *ngIf="loading">
+            Verifica in corso...
+          </span>
+
+        </button>
+
+      </form>
+
+      <!-- RESULT -->
+      <div class="tracking-result" *ngIf="trackingResult">
+
+        <div class="status-badge">
+          {{ trackingResult.stato }}
+        </div>
+
+        <div class="result-row">
+          <span>Tracking:</span>
+          <strong>{{ trackingResult.chiavediTracking }}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Data ritiro:</span>
+          <strong>
+            {{ trackingResult.dataDiRitiro | date:'dd/MM/yyyy' }}
+          </strong>
+        </div>
+
+        <div
+          class="result-row"
+          *ngIf="trackingResult.dataDiConsegna"
+        >
+          <span>Data consegna:</span>
+          <strong>
+            {{ trackingResult.dataDiConsegna | date:'dd/MM/yyyy' }}
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 
 </div>

@@ -1,25 +1,24 @@
-<footer class="app-footer bg-dark text-light mt-5 py-4">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+<footer class="app-footer">
 
-    <!-- LEFT -->
-    <div class="mb-2 mb-md-0">
-      <h6 class="mb-1">ITS-CLASS</h6>
-      <small class="text-secondary">
-        Gestione richieste studenti e docenti
-      </small>
+  <div class="container">
+
+    <div class="left">
+      <h4>🚚 ITS DELIVERY</h4>
+      <p>Delivery, Customer management & Analytics platform</p>
     </div>
 
-    <!-- CENTER LINKS -->
-    <div class="d-flex gap-3">
-      <a class="footer-link" [routerLink]="['/home']">Home</a>
-      <a class="footer-link" [routerLink]="['/requests']">Richieste</a>
-      <a class="footer-link" [routerLink]="['/login']">Login</a>
+    <div class="center">
+
+      <a routerLink="/delivery">Delivery</a>
+      <a routerLink="/customer">Customer</a>
+      <a routerLink="/analytics">Analytics</a>
+
     </div>
 
-    <!-- RIGHT -->
-    <div class="text-secondary small">
-      © {{ year }} ITS Class
+    <div class="right">
+      © {{ year }} ITS DELIVERY
     </div>
 
   </div>
+
 </footer>
