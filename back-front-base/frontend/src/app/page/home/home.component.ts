@@ -24,7 +24,7 @@ export class HomeComponent {
 
   trackingForm = this.fb.group({
     chiaveConsegna: ['', Validators.required],
-    dataDiRitiro: ['null', Validators.required]
+    dataRitiro: ['', Validators.required]
   });
 
   track() {
@@ -34,7 +34,7 @@ export class HomeComponent {
     return;
   }
 
-  const rawDate = this.trackingForm.value.dataDiRitiro;
+  const rawDate = this.trackingForm.value.dataRitiro;
   const tracking = this.trackingForm.value.chiaveConsegna;
 
   if (!rawDate || !tracking) {
@@ -49,13 +49,19 @@ export class HomeComponent {
     return;
   }
 
+  console.log('👉 FORM RAW:', this.trackingForm.value);
+  console.log('👉 PAYLOAD FINAL:', {
+    chiaveConsegna: tracking,
+    dataRitiro: parsedDate.toISOString()
+  });
+  
   this.loading = true;
   this.trackingError = '';
   this.trackingResult = null;
 
   this.trackingSrv.track({
     chiaveConsegna: tracking,
-    dataDiRitiro: parsedDate.toISOString()
+    dataRitiro: parsedDate.toISOString()
   })
   .subscribe({
     next: (res) => {

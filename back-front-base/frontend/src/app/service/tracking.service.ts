@@ -17,9 +17,10 @@ export class TrackingService {
 
   track(data: {
   chiaveConsegna: string;
-  dataDiRitiro: string;
+  dataRitiro: string;
 }) {
-  return this.http.post<TrackingResult>(
+
+  return this.http.post(
     `${environment.apiUrl}/tracking`,
     data
   );
