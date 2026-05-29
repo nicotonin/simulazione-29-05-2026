@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h5 class="modal-title">
-    {{ customer._id ? 'Modifica cliente' : 'Nuovo cliente' }}
+    {{ customer?._id ? 'Modifica cliente' : 'Nuovo cliente' }}
   </h5>
 </div>
 
@@ -8,27 +8,27 @@
 
   <input class="form-control mb-2"
          placeholder="Nominativo"
-         [(ngModel)]="customer.nominativo">
+         [(ngModel)]="customer!.nominativo">
 
   <input class="form-control mb-2"
          placeholder="Via"
-         [(ngModel)]="customer.via">
+         [(ngModel)]="customer!.via">
 
   <input class="form-control mb-2"
          placeholder="Comune"
-         [(ngModel)]="customer.comune">
+         [(ngModel)]="customer!.comune">
 
   <input class="form-control mb-2"
          placeholder="Provincia"
-         [(ngModel)]="customer.provincia">
+         [(ngModel)]="customer!.provincia">
 
   <input class="form-control mb-2"
          placeholder="Email"
-         [(ngModel)]="customer.email">
+         [(ngModel)]="customer!.email">
 
   <input class="form-control mb-2"
          placeholder="Telefono"
-         [(ngModel)]="customer.telefono">
+         [(ngModel)]="customer!.telefono">
 
 </div>
 
@@ -41,7 +41,6 @@
   <button class="btn btn-primary"
           (click)="save()"
           [disabled]="!isValid()">
-
     Salva
   </button>
 

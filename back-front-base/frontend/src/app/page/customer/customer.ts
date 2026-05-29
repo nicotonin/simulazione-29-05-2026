@@ -12,8 +12,7 @@ import { BehaviorSubject, switchMap, catchError, of } from 'rxjs';
   styleUrl: './customer.css',
 })
 export class Customer implements OnInit {
-     private clientiSrv = inject(ClientiService);
-  private fb = inject(FormBuilder);
+      private clientiSrv = inject(ClientiService);
   private modalService = inject(NgbModal);
 
   customers: Cliente[] = [];
@@ -40,52 +39,40 @@ export class Customer implements OnInit {
     });
   }
 
-  // ---------------------------
-  // CREATE (MODAL)
-  // ---------------------------
+  // ---------------- CREATE ----------------
   openCreate() {
     const modalRef = this.modalService.open(CustomerModal);
 
-    modalRef.componentInstance.title = 'Nuovo Cliente';
-    modalRef.componentInstance.data = null;
+    modalRef.componentInstance.customer = null;
 
     modalRef.result.then((result: Cliente) => {
-      this.clientiSrv.create(result).subscribe({
-        next: () => this.load()
-      });
+      this.clientiSrv.create(result).subscribe(() => this.load());
     }).catch(() => {});
   }
 
-  // ---------------------------
-  // EDIT (MODAL)
-  // ---------------------------
-  openEdit(cliente: Cliente) {
+  // ---------------- EDIT ----------------
+  openEdit(c: Cliente) {
     const modalRef = this.modalService.open(CustomerModal);
 
-    modalRef.componentInstance.title = 'Modifica Cliente';
-    modalRef.componentInstance.data = cliente;
+    modalRef.componentInstance.customer = c;
 
     modalRef.result.then((result: Cliente) => {
-      this.clientiSrv.update(cliente._id!, result).subscribe({
-        next: () => this.load()
-      });
+      this.clientiSrv.update(c._id!, result).subscribe(() => this.load());
     }).catch(() => {});
   }
 
-  // ---------------------------
-  // DELETE
-  // ---------------------------
-  delete(id: string | undefined) {
-    if (!id) return;
+  // ---------------- DELETE ----------------
+  delete(id?: string) {
+    if (!id) {
+      console.log('ID mancante');
+      return;
+    }
 
-    if (!confirm('Vuoi eliminare questo cliente?')) return;
+    if (!confirm('Eliminare cliente?')) return;
 
     this.clientiSrv.delete(id).subscribe({
       next: () => this.load(),
-      error: (err) => {
-        console.log(err);
-        this.error = err?.error?.message || 'Errore eliminazione';
-      }
+      error: (err) => console.log(err)
     });
   }
 }

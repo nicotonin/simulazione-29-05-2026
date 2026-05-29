@@ -21,6 +21,7 @@ import { Customer } from './page/customer/customer';
 import { CustomerModal } from './components/customer-modal/customer-modal';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { CustomerModal } from './components/customer-modal/customer-modal';
     Delivery,
     Analytics,
     Customer,
-    CustomerModal
+    CustomerModal,
+  
   ],
   imports: [
     BrowserModule,

@@ -9,22 +9,19 @@
   </div>
 
   <div *ngIf="loading">Caricamento...</div>
-
-  <div *ngIf="error" class="error">
-    {{ error }}
-  </div>
+  <div *ngIf="error" class="error">{{ error }}</div>
 
   <table class="table table-striped table-hover" *ngIf="customers.length">
 
     <thead>
       <tr>
         <th>Nominativo</th>
-        <th>Indirizzo</th>
+        <th>Via</th>
         <th>Comune</th>
         <th>Provincia</th>
         <th>Email</th>
         <th>Telefono</th>
-        <th style="width: 180px;">Azioni</th>
+        <th>Azioni</th>
       </tr>
     </thead>
 
@@ -32,29 +29,76 @@
       <tr *ngFor="let c of customers">
 
         <td>{{ c.nominativo }}</td>
-
         <td>{{ c.via }}</td>
-
         <td>{{ c.comune }}</td>
-
         <td>{{ c.provincia }}</td>
-
         <td>{{ c.email }}</td>
-
         <td>{{ c.telefono }}</td>
 
         <td>
-
-          <button class="btn btn-sm btn-warning"
+          <button class="btn btn-warning btn-sm"
                   (click)="openEdit(c)">
             Modifica
           </button>
 
-          <button class="btn btn-sm btn-danger"
+          <button class="btn btn-danger btn-sm"
                   (click)="delete(c._id)">
             Elimina
           </button>
+        </td>
 
+      </tr>
+    </tbody>
+
+  </table>
+
+</div><div class="page">
+
+  <div class="header">
+    <h1>Clienti</h1>
+
+    <button class="btn btn-primary" (click)="openCreate()">
+      + Nuovo Cliente
+    </button>
+  </div>
+
+  <div *ngIf="loading">Caricamento...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <table class="table table-striped table-hover" *ngIf="customers.length">
+
+    <thead>
+      <tr>
+        <th>Nominativo</th>
+        <th>Via</th>
+        <th>Comune</th>
+        <th>Provincia</th>
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let c of customers">
+
+        <td>{{ c.nominativo }}</td>
+        <td>{{ c.via }}</td>
+        <td>{{ c.comune }}</td>
+        <td>{{ c.provincia }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.telefono }}</td>
+
+        <td>
+          <button class="btn btn-warning btn-sm"
+                  (click)="openEdit(c)">
+            Modifica
+          </button>
+
+          <button class="btn btn-danger btn-sm"
+                  (click)="delete(c._id)">
+            Elimina
+          </button>
         </td>
 
       </tr>

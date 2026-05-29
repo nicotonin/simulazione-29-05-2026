@@ -10,22 +10,25 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrl: './customer-modal.css',
 })
 export class CustomerModal {
-   activeModal = inject(NgbActiveModal);
+     activeModal = inject(NgbActiveModal);
 
-  @Input() customer: Cliente = {
-    nominativo: '',
-    via: '',
-    comune: '',
-    provincia: '',
-    email: '',
-    telefono: ''
-  };
+  @Input() customer: Cliente | null = null;
 
-  @Input() isEdit = false;
+  ngOnInit() {
+    this.customer = this.customer
+      ? { ...this.customer }
+      : {
+          nominativo: '',
+          via: '',
+          comune: '',
+          provincia: '',
+          email: '',
+          telefono: ''
+        };
+  }
 
   save() {
     if (!this.isValid()) return;
-
     this.activeModal.close(this.customer);
   }
 
@@ -34,13 +37,12 @@ export class CustomerModal {
   }
 
   isValid(): boolean {
-    return (
-      !!this.customer.nominativo &&
-      !!this.customer.via &&
-      !!this.customer.comune &&
-      !!this.customer.provincia &&
-      !!this.customer.email
+    return !!(
+      this.customer?.nominativo &&
+      this.customer?.via &&
+      this.customer?.comune &&
+      this.customer?.provincia &&
+      this.customer?.email
     );
   }
-
 }
