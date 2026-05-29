@@ -14,9 +14,6 @@ export class AddUserDTO {
     @IsEmail()
     email: string;
 
-    @IsString()
-    role:string;
-
     @IsStrongPassword({
         minLength: 8
     })

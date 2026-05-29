@@ -16,8 +16,7 @@ exports.listUsers = void 0;
 const user_service_1 = __importDefault(require("./user.service"));
 const listUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { role } = req.query;
-        const users = yield user_service_1.default.getUsers(role);
+        const users = yield user_service_1.default.getUsers();
         res.json(users);
     }
     catch (error) {

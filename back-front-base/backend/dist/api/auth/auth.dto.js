@@ -25,9 +25,6 @@ __decorate([
     (0, class_validator_1.IsEmail)()
 ], AddUserDTO.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)()
-], AddUserDTO.prototype, "role", void 0);
-__decorate([
     (0, class_validator_1.IsStrongPassword)({
         minLength: 8
     })

@@ -34,14 +34,10 @@ export class UserService {
         return newUser;
     }
 
-    async getUsers(role: string): Promise<User[]> {
-        let query = {};
-        if (role) {
-            query = {role: role};
-        }
-
-        return await UserModel.find(query);
-    }
+   async getUsers(): Promise<User[]> {
+    let query = {};
+    return await UserModel.find(query);
+}
 }
 
 export default new UserService();

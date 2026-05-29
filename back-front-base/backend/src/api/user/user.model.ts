@@ -4,7 +4,7 @@ import { User } from './user.entity';
 const userSchema = new Schema<User>({
     firstName: String,
     lastName: String,
-    role: { type: String, enum: ['role1', 'role2',"Role1","Role2"], required: true },
+  
    
 })
 

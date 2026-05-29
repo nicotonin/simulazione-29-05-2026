@@ -44,12 +44,9 @@ class UserService {
             return newUser;
         });
     }
-    getUsers(role) {
+    getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             let query = {};
-            if (role) {
-                query = { role: role };
-            }
             return yield user_model_1.UserModel.find(query);
         });
     }

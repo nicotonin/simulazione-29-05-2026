@@ -5,7 +5,6 @@ const mongoose_1 = require("mongoose");
 const userSchema = new mongoose_1.Schema({
     firstName: String,
     lastName: String,
-    role: { type: String, enum: ['role1', 'role2', "Role1", "Role2"], required: true },
 });
 userSchema.set('toJSON', {
     virtuals: true,
