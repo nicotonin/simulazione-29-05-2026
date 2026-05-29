@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cliente } from '../../service/clienti.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-modal',
@@ -9,20 +10,18 @@ import { Cliente } from '../../service/clienti.service';
   styleUrl: './customer-modal.css',
 })
 export class CustomerModal {
-  activeModal = inject(NgbActiveModal);
+   activeModal = inject(NgbActiveModal);
 
-  customer: Cliente = {
-    nome: '',
-    cognome: '',
+  @Input() customer: Cliente = {
+    nominativo: '',
+    via: '',
+    comune: '',
+    provincia: '',
     email: '',
     telefono: ''
   };
 
-  ngOnInit() {}
-
-  isValid(): boolean {
-    return !!this.customer.nome && !!this.customer.cognome && !!this.customer.email;
-  }
+  @Input() isEdit = false;
 
   save() {
     if (!this.isValid()) return;
@@ -32,6 +31,16 @@ export class CustomerModal {
 
   cancel() {
     this.activeModal.dismiss();
+  }
+
+  isValid(): boolean {
+    return (
+      !!this.customer.nominativo &&
+      !!this.customer.via &&
+      !!this.customer.comune &&
+      !!this.customer.provincia &&
+      !!this.customer.email
+    );
   }
 
 }

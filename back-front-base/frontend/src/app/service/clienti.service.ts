@@ -4,10 +4,12 @@ import { environment } from '../../environments/environment';
 
 export interface Cliente {
   _id?: string;
-  nome: string;
-  cognome: string;
-  email: string;
+  nominativo: string;
+  via: string;
+  comune: string;
+  provincia: string;
   telefono?: string;
+  email: string;
 }
 
 @Injectable({

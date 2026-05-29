@@ -1,31 +1,34 @@
-<p>customer-modal works!</p>
 <div class="modal-header">
-  <h4 class="modal-title">
+  <h5 class="modal-title">
     {{ customer._id ? 'Modifica cliente' : 'Nuovo cliente' }}
-  </h4>
+  </h5>
 </div>
 
 <div class="modal-body">
 
-  <input
-    type="text"
-    placeholder="Nome"
-    [(ngModel)]="customer.nome">
+  <input class="form-control mb-2"
+         placeholder="Nominativo"
+         [(ngModel)]="customer.nominativo">
 
-  <input
-    type="text"
-    placeholder="Cognome"
-    [(ngModel)]="customer.cognome">
+  <input class="form-control mb-2"
+         placeholder="Via"
+         [(ngModel)]="customer.via">
 
-  <input
-    type="email"
-    placeholder="Email"
-    [(ngModel)]="customer.email">
+  <input class="form-control mb-2"
+         placeholder="Comune"
+         [(ngModel)]="customer.comune">
 
-  <input
-    type="text"
-    placeholder="Telefono"
-    [(ngModel)]="customer.telefono">
+  <input class="form-control mb-2"
+         placeholder="Provincia"
+         [(ngModel)]="customer.provincia">
+
+  <input class="form-control mb-2"
+         placeholder="Email"
+         [(ngModel)]="customer.email">
+
+  <input class="form-control mb-2"
+         placeholder="Telefono"
+         [(ngModel)]="customer.telefono">
 
 </div>
 
@@ -35,7 +38,10 @@
     Annulla
   </button>
 
-  <button class="btn btn-primary" (click)="save()" [disabled]="!isValid()">
+  <button class="btn btn-primary"
+          (click)="save()"
+          [disabled]="!isValid()">
+
     Salva
   </button>
 
