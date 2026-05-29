@@ -7,6 +7,7 @@ import { CustomerModal } from '../../add-request-modal/add-request-modal';
 
 
 @Component({
+  standalone: false,
   selector: 'app-customer',
   templateUrl: './customer.html',
   styleUrls: ['./customer.css']
