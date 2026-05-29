@@ -1,17 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ClientiService, Cliente } from '../../service/clienti.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, inject } from '@angular/core';
 import { BehaviorSubject, switchMap } from 'rxjs';
-import { EditCustomerModal } from '../../add-request-modal/add-request-modal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { ClientiService, Cliente } from '../../service/clienti.service';
+import { CustomerModal } from '../../add-request-modal/add-request-modal';
 
 
 @Component({
-  standalone: false,
   selector: 'app-customer',
   templateUrl: './customer.html',
   styleUrls: ['./customer.css']
 })
-export class Customer implements OnInit {
+export class Customer {
 
   private clientiSrv = inject(ClientiService);
   private modal = inject(NgbModal);
@@ -22,22 +22,21 @@ export class Customer implements OnInit {
     switchMap(() => this.clientiSrv.list())
   );
 
-  ngOnInit(): void {}
-
   load() {
     this.refresh$.next();
   }
 
+  // ✅ CREATE
   openAdd() {
-    const modalRef = this.modal.open(EditCustomerModal);
+    const modalRef = this.modal.open(CustomerModal);
 
     modalRef.componentInstance.cliente = {
       nominativo: '',
       via: '',
       comune: '',
       provincia: '',
-      telefono: '',
-      email: ''
+      email: '',
+      telefono: ''
     };
 
     modalRef.result.then((result: Cliente) => {
@@ -45,24 +44,27 @@ export class Customer implements OnInit {
     }).catch(() => {});
   }
 
+  // ✅ EDIT
   openEdit(c: Cliente) {
-    const modalRef = this.modal.open(EditCustomerModal);
+    const modalRef = this.modal.open(CustomerModal);
 
     modalRef.componentInstance.cliente = { ...c };
 
-    modalRef.result.then((updated: Cliente) => {
+    modalRef.result.then((result: Cliente) => {
 
-      this.clientiSrv.update(c._id!, updated)
+      if (!c._id) return;
+
+      this.clientiSrv.update(c._id, result)
         .subscribe(() => this.load());
 
     }).catch(() => {});
   }
 
-  delete(id?: string) {
-    if (!id) return;
+  // ✅ DELETE
+  delete(_id?: string) {
+    if (!_id) return;
 
-    this.clientiSrv.delete(id).subscribe(() => {
-      this.load();
-    });
+    this.clientiSrv.delete(_id)
+      .subscribe(() => this.load());
   }
 }

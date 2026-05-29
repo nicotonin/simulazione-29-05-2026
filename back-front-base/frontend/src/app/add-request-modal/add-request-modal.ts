@@ -5,14 +5,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cliente } from '../service/clienti.service';
 
 @Component({
-  selector: 'app-edit-customer-modal',
+  selector: 'app-customer-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  styleUrls: ['./add-request-modal.component.css'],
   template: `
 
     <div class="modal-header">
-      <h4 class="modal-title">Modifica cliente</h4>
+      <h4 class="modal-title">
+        {{ cliente._id ? 'Modifica cliente' : 'Nuovo cliente' }}
+      </h4>
     </div>
 
     <div class="modal-body">
@@ -46,7 +47,7 @@ import { Cliente } from '../service/clienti.service';
     <div class="modal-footer">
 
       <button class="btn btn-secondary"
-              (click)="activeModal.dismiss()">
+              (click)="cancel()">
         Annulla
       </button>
 
@@ -59,9 +60,9 @@ import { Cliente } from '../service/clienti.service';
     </div>
   `
 })
-export class EditCustomerModal {
+export class CustomerModal {
 
-    activeModal = inject(NgbActiveModal);
+  activeModal = inject(NgbActiveModal);
 
   cliente: Cliente = {
     nominativo: '',
@@ -81,7 +82,6 @@ export class EditCustomerModal {
   }
 
   save() {
-    if (!this.isValid()) return;
     this.activeModal.close(this.cliente);
   }
 }
