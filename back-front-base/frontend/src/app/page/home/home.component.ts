@@ -28,51 +28,16 @@ trackingForm = this.fb.group({
 
   track() {
 
-  if (this.trackingForm.invalid) {
-    this.trackingForm.markAllAsTouched();
-    return;
-  }
-
-  const rawDate = this.trackingForm.value.dataRitiro;
-  const tracking = this.trackingForm.value.chiaveConsegna;
-
-  if (!rawDate || !tracking) {
-    this.trackingError = "Compila tutti i campi";
-    return;
-  }
-
-  const parsedDate = new Date(rawDate);
-
-  if (isNaN(parsedDate.getTime())) {
-    this.trackingError = "Data non valida";
-    return;
-  }
-
-  console.log('👉 FORM RAW:', this.trackingForm.value);
-  console.log('👉 PAYLOAD FINAL:', {
-    chiaveConsegna: tracking,
-    dataRitiro: parsedDate.toISOString()
-  });
-
-  this.loading = true;
-  this.trackingError = '';
-  this.trackingResult = null;
+  console.log('CLICK OK');
 
   this.trackingSrv.track({
-    chiaveConsegna: tracking,
-    dataRitiro: parsedDate.toISOString()
-  })
-  .subscribe({
-    next: (res) => {
-      this.trackingResult = res;
-      this.loading = false;
-    },
-    error: (err) => {
-      console.log(err);
-      this.loading = false;
-      this.trackingError = err?.error?.message || 'Errore tracking';
-    }
+    chiaveConsegna: 'TRK-002',
+    dataRitiro: '2026-05-29T00:00:00.000Z'
+  }).subscribe({
+    next: res => console.log('OK RESPONSE', res),
+    error: err => console.log('ERROR RESPONSE', err)
   });
+
 }
   
 }
