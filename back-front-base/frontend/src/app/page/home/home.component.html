@@ -27,7 +27,7 @@
 
       <h2>Tracking spedizione</h2>
 
-    <form *ngIf="trackingForm" [formGroup]="trackingForm">
+     <form *ngIf="trackingForm" [formGroup]="trackingForm"(ngSubmit)="track()">
 
   <input type="text" formControlName="chiaveConsegna">
 
