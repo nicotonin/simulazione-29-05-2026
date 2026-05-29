@@ -1,0 +1,91 @@
+<div class="customers-page">
+
+  <h1>Gestione Clienti</h1>
+
+  <!-- ERROR -->
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="layout">
+
+    <!-- LISTA CLIENTI -->
+    <div class="list">
+
+      <div
+        class="card"
+        *ngFor="let c of customers"
+        (click)="selectCustomer(c)"
+      >
+
+        <div class="info">
+          <h3>{{ c.nome }} {{ c.cognome }}</h3>
+          <p>{{ c.email }}</p>
+          <small *ngIf="c.telefono">{{ c.telefono }}</small>
+        </div>
+
+        <div class="actions">
+          <button type="button" (click)="selectCustomer(c)">
+            Modifica
+          </button>
+
+          <button
+            type="button"
+            class="delete"
+            (click)="delete(c._id!)"
+          >
+            Elimina
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+
+      <h2>
+        {{ selectedCustomer ? 'Modifica Cliente' : 'Nuovo Cliente' }}
+      </h2>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="selectedCustomer ? update() : create()"
+      >
+
+        <input
+          type="text"
+          placeholder="Nome"
+          formControlName="nome"
+        >
+
+        <input
+          type="text"
+          placeholder="Cognome"
+          formControlName="cognome"
+        >
+
+        <input
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+        >
+
+        <input
+          type="text"
+          placeholder="Telefono"
+          formControlName="telefono"
+        >
+
+        <button type="submit">
+          {{ selectedCustomer ? 'Aggiorna' : 'Crea' }}
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

@@ -5,6 +5,9 @@ import { RegisterComponent } from './page/register/register.component';
 import { HomeComponent } from './page/home/home.component';
 import { authGuard } from './utils/auth.guard';
 import { loginRedirectGuard } from './utils/loginRedirectGuard';
+import { Delivery } from './page/delivery/delivery';
+import { Analytics } from './page/analytics/analytics';
+import { Customer } from './page/customer/customer';
 
 
 const routes: Routes = [
@@ -19,18 +22,32 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-
   {
     path: 'home',
     canActivate: [authGuard],
     component: HomeComponent
   },
-
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  }
+  },
+  {
+    path: 'delivery',
+    component: Delivery,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'customer',
+    component: Customer,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'analytics',
+    component: Analytics,
+    canActivate: [authGuard]
+  },
 
 ];
 

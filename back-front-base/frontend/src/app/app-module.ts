@@ -14,6 +14,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavUserComponent } from './components/nav-user/nav-user.component';
 import { IfAuthenticatedDirective } from './utils/if-authenticated.directive';
 import { FooterComponent } from './components/footer/footer.component';
+import { Delivery } from './page/delivery/delivery';
+import { Analytics } from './page/analytics/analytics';
+import { CommonModule } from '@angular/common';
+import { Customer } from './page/customer/customer';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +29,10 @@ import { FooterComponent } from './components/footer/footer.component';
     NavbarComponent,
     NavUserComponent,
     IfAuthenticatedDirective,
-    FooterComponent
+    FooterComponent,
+    Delivery,
+    Analytics,
+    Customer
   ],
   imports: [
     BrowserModule,
@@ -32,6 +40,8 @@ import { FooterComponent } from './components/footer/footer.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule
+    
   ],
   providers: [
     provideHttpClient(
