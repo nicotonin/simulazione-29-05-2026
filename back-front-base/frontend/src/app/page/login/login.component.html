@@ -33,13 +33,12 @@
           Ricordami
         </label>
 
-        <a routerLink="/forgot-password">Password dimenticata?</a>
+       
       </div>
 
       <!-- BUTTON -->
       <button type="submit" [disabled]="loading">
         <span *ngIf="!loading">Accedi →</span>
-        <span *ngIf="loading">Caricamento...</span>
       </button>
 
     </form>
