@@ -28,14 +28,23 @@ trackingForm = this.fb.group({
 
   track() {
 
-  console.log('CLICK OK');
+  this.loading = true;
+  this.trackingError = '';
 
   this.trackingSrv.track({
     chiaveConsegna: 'TRK-002',
     dataRitiro: '2026-05-29T00:00:00.000Z'
   }).subscribe({
-    next: res => console.log('OK RESPONSE', res),
-    error: err => console.log('ERROR RESPONSE', err)
+    next: res => {
+      console.log('OK RESPONSE', res);
+      this.trackingResult = res;
+      this.loading = false;
+    },
+    error: err => {
+      console.log('ERROR RESPONSE', err);
+      this.trackingError = err?.error?.message || 'Errore tracking';
+      this.loading = false;
+    }
   });
 
 }
