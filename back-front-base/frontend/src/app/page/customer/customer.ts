@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ClientiService, Cliente } from '../../service/clienti.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerModal } from '../../components/customer-modal/customer-modal';
 
 @Component({
   selector: 'app-customer',
@@ -9,21 +11,12 @@ import { ClientiService, Cliente } from '../../service/clienti.service';
   styleUrl: './customer.css',
 })
 export class Customer implements OnInit {
-private clientiSrv = inject(ClientiService);
-  private fb = inject(FormBuilder);
+  private clientiSrv = inject(ClientiService);
+  private modalSrv = inject(NgbModal);
 
   customers: Cliente[] = [];
-  selectedCustomer: Cliente | null = null;
-
   loading = false;
   error = '';
-
-  form = this.fb.group({
-    nome: ['', Validators.required],
-    cognome: ['', Validators.required],
-    email: ['', Validators.required],
-    telefono: ['']
-  });
 
   ngOnInit(): void {
     this.load();
@@ -44,43 +37,37 @@ private clientiSrv = inject(ClientiService);
     });
   }
 
-  selectCustomer(c: Cliente) {
-    this.selectedCustomer = c;
-    this.form.patchValue(c);
+  // ➜ CREA
+  openCreateModal() {
+    const modal = this.modalSrv.open(CustomerModal, { centered: true });
+
+    modal.result.then((data) => {
+      if (!data) return;
+
+      this.clientiSrv.create(data).subscribe(() => this.load());
+    }).catch(() => {});
   }
 
-  create() {
-    if (this.form.invalid) return;
+  // ➜ MODIFICA
+  openEditModal(customer: Cliente) {
+    const modal = this.modalSrv.open(CustomerModal, { centered: true });
 
-    this.clientiSrv.create(this.form.value as Cliente).subscribe({
-      next: () => {
-        this.form.reset();
-        this.load();
-      }
-    });
+    modal.componentInstance.customer = customer;
+
+    modal.result.then((data) => {
+      if (!data) return;
+
+      this.clientiSrv.update(customer._id!, data).subscribe(() => this.load());
+    }).catch(() => {});
   }
 
-  update() {
-    if (!this.selectedCustomer) return;
-
-    this.clientiSrv.update(
-      this.selectedCustomer._id!,
-      this.form.value as Cliente
-    ).subscribe({
-      next: () => {
-        this.load();
-      }
-    });
-  }
-
+  // ➜ DELETE
   delete(id: string) {
+    if (!confirm('Sei sicuro di eliminare questo cliente?')) return;
+
     this.clientiSrv.delete(id).subscribe({
-      next: () => {
-        this.load();
-      },
-      error: (err) => {
-        this.error = err?.error?.message || 'Errore eliminazione';
-      }
+      next: () => this.load(),
+      error: (err) => this.error = err?.error?.message || 'Errore eliminazione'
     });
   }
 }

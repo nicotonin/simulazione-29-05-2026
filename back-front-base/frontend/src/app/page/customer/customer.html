@@ -1,90 +1,52 @@
-<div class="customers-page">
+<div class="page">
 
-  <h1>Gestione Clienti</h1>
+  <div class="header">
+    <h1>Clienti</h1>
 
-  <!-- ERROR -->
+    <button class="btn btn-primary" (click)="openCreateModal()">
+      + Nuovo cliente
+    </button>
+  </div>
+
   <div class="error" *ngIf="error">
     {{ error }}
   </div>
 
-  <div class="layout">
+  <div class="table-container">
 
-    <!-- LISTA CLIENTI -->
-    <div class="list">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefono</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
 
-      <div
-        class="card"
-        *ngFor="let c of customers"
-        (click)="selectCustomer(c)"
-      >
+      <tbody>
+        <tr *ngFor="let c of customers">
 
-        <div class="info">
-          <h3>{{ c.nome }} {{ c.cognome }}</h3>
-          <p>{{ c.email }}</p>
-          <small *ngIf="c.telefono">{{ c.telefono }}</small>
-        </div>
+          <td>{{ c.nome }} {{ c.cognome }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.telefono }}</td>
 
-        <div class="actions">
-          <button type="button" (click)="selectCustomer(c)">
-            Modifica
-          </button>
+          <td class="actions">
 
-          <button
-            type="button"
-            class="delete"
-            (click)="delete(c._id!)"
-          >
-            Elimina
-          </button>
-        </div>
+            <button (click)="openEditModal(c)">
+              Modifica
+            </button>
 
-      </div>
+            <button class="delete" (click)="delete(c._id!)">
+              Elimina
+            </button>
 
-    </div>
+          </td>
 
-    <!-- FORM -->
-    <div class="form-card">
+        </tr>
+      </tbody>
 
-      <h2>
-        {{ selectedCustomer ? 'Modifica Cliente' : 'Nuovo Cliente' }}
-      </h2>
-
-      <form
-        [formGroup]="form"
-        (ngSubmit)="selectedCustomer ? update() : create()"
-      >
-
-        <input
-          type="text"
-          placeholder="Nome"
-          formControlName="nome"
-        >
-
-        <input
-          type="text"
-          placeholder="Cognome"
-          formControlName="cognome"
-        >
-
-        <input
-          type="email"
-          placeholder="Email"
-          formControlName="email"
-        >
-
-        <input
-          type="text"
-          placeholder="Telefono"
-          formControlName="telefono"
-        >
-
-        <button type="submit">
-          {{ selectedCustomer ? 'Aggiorna' : 'Crea' }}
-        </button>
-
-      </form>
-
-    </div>
+    </table>
 
   </div>
 

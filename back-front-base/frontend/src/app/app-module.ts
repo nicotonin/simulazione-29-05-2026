@@ -18,6 +18,7 @@ import { Delivery } from './page/delivery/delivery';
 import { Analytics } from './page/analytics/analytics';
 import { CommonModule } from '@angular/common';
 import { Customer } from './page/customer/customer';
+import { CustomerModal } from './components/customer-modal/customer-modal';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { Customer } from './page/customer/customer';
     FooterComponent,
     Delivery,
     Analytics,
-    Customer
+    Customer,
+    CustomerModal
   ],
   imports: [
     BrowserModule,

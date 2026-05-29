@@ -1,0 +1,42 @@
+<p>customer-modal works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{ customer._id ? 'Modifica cliente' : 'Nuovo cliente' }}
+  </h4>
+</div>
+
+<div class="modal-body">
+
+  <input
+    type="text"
+    placeholder="Nome"
+    [(ngModel)]="customer.nome">
+
+  <input
+    type="text"
+    placeholder="Cognome"
+    [(ngModel)]="customer.cognome">
+
+  <input
+    type="email"
+    placeholder="Email"
+    [(ngModel)]="customer.email">
+
+  <input
+    type="text"
+    placeholder="Telefono"
+    [(ngModel)]="customer.telefono">
+
+</div>
+
+<div class="modal-footer">
+
+  <button class="btn btn-secondary" (click)="cancel()">
+    Annulla
+  </button>
+
+  <button class="btn btn-primary" (click)="save()" [disabled]="!isValid()">
+    Salva
+  </button>
+
+</div>
