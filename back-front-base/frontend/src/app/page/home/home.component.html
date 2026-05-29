@@ -27,42 +27,53 @@
 
       <h2>Tracking spedizione</h2>
 
-     <form *ngIf="trackingForm" [formGroup]="trackingForm"(ngSubmit)="track()">
+      <!-- FORM -->
+      <form
+        *ngIf="trackingForm"
+        [formGroup]="trackingForm"
+        (ngSubmit)="track()"
+      >
 
-  <input type="text" formControlName="chiaveConsegna">
+        <input
+          type="text"
+          formControlName="chiaveConsegna"
+          placeholder="Chiave tracking"
+        >
 
-  <input type="date" formControlName="dataRitiro">
+        <input
+          type="date"
+          formControlName="dataRitiro"
+        >
 
-  <button type="submit">Track</button>
+        <button type="submit">
+          Track
+        </button>
 
-</form>
+      </form>
 
       <!-- RESULT -->
-      <div class="tracking-result" *ngIf="trackingResult">
+      <div class="tracking-result" *ngIf="trackingResult as r">
 
         <div class="status-badge">
-          {{ trackingResult.stato }}
+          {{ r.stato }}
         </div>
 
         <div class="result-row">
           <span>Tracking:</span>
-          <strong>{{ trackingResult.chiavediTracking }}</strong>
+          <strong>{{ r.chiavediTracking }}</strong>
         </div>
 
         <div class="result-row">
           <span>Data ritiro:</span>
           <strong>
-            {{ trackingResult.dataDiRitiro | date:'dd/MM/yyyy' }}
+            {{ r.dataRitiro | date:'dd/MM/yyyy' }}
           </strong>
         </div>
 
-        <div
-          class="result-row"
-          *ngIf="trackingResult.dataDiConsegna"
-        >
+        <div class="result-row" *ngIf="r.dataConsegna">
           <span>Data consegna:</span>
           <strong>
-            {{ trackingResult.dataDiConsegna | date:'dd/MM/yyyy' }}
+            {{ r.dataConsegna | date:'dd/MM/yyyy' }}
           </strong>
         </div>
 
