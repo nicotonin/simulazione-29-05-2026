@@ -9,7 +9,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/components/customer-modal/app-add-request-modal"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

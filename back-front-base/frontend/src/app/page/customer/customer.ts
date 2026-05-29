@@ -1,78 +1,68 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { ClientiService, Cliente } from '../../service/clienti.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerModal } from '../../components/customer-modal/customer-modal';
-import { BehaviorSubject, switchMap, catchError, of } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { EditCustomerModal } from '../../add-request-modal/add-request-modal';
+
 
 @Component({
-  selector: 'app-customer',
   standalone: false,
+  selector: 'app-customer',
   templateUrl: './customer.html',
-  styleUrl: './customer.css',
+  styleUrls: ['./customer.css']
 })
 export class Customer implements OnInit {
-      private clientiSrv = inject(ClientiService);
-  private modalService = inject(NgbModal);
 
-  customers: Cliente[] = [];
-  loading = false;
-  error = '';
+  private clientiSrv = inject(ClientiService);
+  private modal = inject(NgbModal);
 
-  ngOnInit(): void {
-    this.load();
-  }
+  private refresh$ = new BehaviorSubject<void>(undefined);
+
+  customers$ = this.refresh$.pipe(
+    switchMap(() => this.clientiSrv.list())
+  );
+
+  ngOnInit(): void {}
 
   load() {
-    this.loading = true;
-
-    this.clientiSrv.list().subscribe({
-      next: (res) => {
-        this.customers = res;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.log(err);
-        this.error = 'Errore caricamento clienti';
-        this.loading = false;
-      }
-    });
+    this.refresh$.next();
   }
 
-  // ---------------- CREATE ----------------
-  openCreate() {
-    const modalRef = this.modalService.open(CustomerModal);
+  openAdd() {
+    const modalRef = this.modal.open(EditCustomerModal);
 
-    modalRef.componentInstance.customer = null;
+    modalRef.componentInstance.cliente = {
+      nominativo: '',
+      via: '',
+      comune: '',
+      provincia: '',
+      telefono: '',
+      email: ''
+    };
 
     modalRef.result.then((result: Cliente) => {
-      this.clientiSrv.create(result).subscribe(() => this.load());
+      this.clientiSrv.add(result).subscribe(() => this.load());
     }).catch(() => {});
   }
 
-  // ---------------- EDIT ----------------
   openEdit(c: Cliente) {
-    const modalRef = this.modalService.open(CustomerModal);
+    const modalRef = this.modal.open(EditCustomerModal);
 
-    modalRef.componentInstance.customer = c;
+    modalRef.componentInstance.cliente = { ...c };
 
-    modalRef.result.then((result: Cliente) => {
-      this.clientiSrv.update(c._id!, result).subscribe(() => this.load());
+    modalRef.result.then((updated: Cliente) => {
+
+      this.clientiSrv.update(c._id!, updated)
+        .subscribe(() => this.load());
+
     }).catch(() => {});
   }
 
-  // ---------------- DELETE ----------------
   delete(id?: string) {
-    if (!id) {
-      console.log('ID mancante');
-      return;
-    }
+    if (!id) return;
 
-    if (!confirm('Eliminare cliente?')) return;
-
-    this.clientiSrv.delete(id).subscribe({
-      next: () => this.load(),
-      error: (err) => console.log(err)
+    this.clientiSrv.delete(id).subscribe(() => {
+      this.load();
     });
   }
 }

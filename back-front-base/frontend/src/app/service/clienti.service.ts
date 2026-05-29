@@ -26,7 +26,7 @@ export class ClientiService {
     return this.http.get<Cliente>(`${environment.apiUrl}/clienti/${id}`);
   }
 
-  create(cliente: Cliente) {
+  add(cliente: Cliente) {
     return this.http.post<Cliente>(`${environment.apiUrl}/clienti`, cliente);
   }
 

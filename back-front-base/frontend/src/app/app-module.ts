@@ -18,7 +18,7 @@ import { Delivery } from './page/delivery/delivery';
 import { Analytics } from './page/analytics/analytics';
 import { CommonModule } from '@angular/common';
 import { Customer } from './page/customer/customer';
-import { CustomerModal } from './components/customer-modal/customer-modal';
+
 
 
 
@@ -34,8 +34,7 @@ import { CustomerModal } from './components/customer-modal/customer-modal';
     FooterComponent,
     Delivery,
     Analytics,
-    Customer,
-    CustomerModal,
+    Customer
   
   ],
   imports: [
