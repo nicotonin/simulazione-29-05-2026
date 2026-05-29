@@ -27,50 +27,15 @@
 
       <h2>Tracking spedizione</h2>
 
-      <form [formGroup]="trackingForm" (ngSubmit)="track()">
+    <form *ngIf="trackingForm" [formGroup]="trackingForm">
 
-        <!-- TRACKING -->
-        <label>Chiave di tracking</label>
+  <input type="text" formControlName="chiaveConsegna">
 
-        <div class="input-box">
-          <span class="icon">📦</span>
-          <input
-            type="text"
-            formControlName="chiavediTracking"
-            placeholder="TRK-123456789"
-          >
-        </div>
+  <input type="date" formControlName="dataRitiro">
 
-        <!-- DATA -->
-        <label>Data di ritiro</label>
+  <button type="submit">Track</button>
 
-        <div class="input-box">
-          <span class="icon">📅</span>
-          <input
-            type="date"
-            formControlName="dataDiRitiro"
-          >
-        </div>
-
-        <!-- ERROR -->
-        <div class="error" *ngIf="trackingError">
-          {{ trackingError }}
-        </div>
-
-        <!-- BUTTON -->
-        <button type="submit" [disabled]="loading">
-
-          <span *ngIf="!loading">
-            Verifica spedizione →
-          </span>
-
-          <span *ngIf="loading">
-            Verifica in corso...
-          </span>
-
-        </button>
-
-      </form>
+</form>
 
       <!-- RESULT -->
       <div class="tracking-result" *ngIf="trackingResult">

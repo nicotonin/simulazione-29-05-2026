@@ -21,11 +21,10 @@ export class HomeComponent {
   trackingError = '';
 
   trackingResult: any = null;
-
-  trackingForm = this.fb.group({
-    chiaveConsegna: ['', Validators.required],
-    dataRitiro: ['', Validators.required]
-  });
+trackingForm = this.fb.group({
+  chiaveConsegna: ['', Validators.required],
+  dataRitiro: ['', Validators.required]
+});
 
   track() {
 
@@ -54,7 +53,7 @@ export class HomeComponent {
     chiaveConsegna: tracking,
     dataRitiro: parsedDate.toISOString()
   });
-  
+
   this.loading = true;
   this.trackingError = '';
   this.trackingResult = null;
