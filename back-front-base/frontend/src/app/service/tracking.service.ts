@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 export interface TrackingResult {
-  chiavediTracking: string;
+  chiaveConsegna: string;
   stato: string;
   dataDiRitiro: string;
   dataDiConsegna?: string | null;
@@ -16,7 +16,7 @@ export class TrackingService {
   private http = inject(HttpClient);
 
   track(data: {
-  chiavediTracking: string;
+  chiaveConsegna: string;
   dataDiRitiro: string;
 }) {
   return this.http.post<TrackingResult>(

@@ -23,7 +23,7 @@ export class HomeComponent {
   trackingResult: any = null;
 
   trackingForm = this.fb.group({
-    chiavediTracking: ['', Validators.required],
+    chiaveConsegna: ['', Validators.required],
     dataDiRitiro: ['null', Validators.required]
   });
 
@@ -35,7 +35,7 @@ export class HomeComponent {
   }
 
   const rawDate = this.trackingForm.value.dataDiRitiro;
-  const tracking = this.trackingForm.value.chiavediTracking;
+  const tracking = this.trackingForm.value.chiaveConsegna;
 
   if (!rawDate || !tracking) {
     this.trackingError = "Compila tutti i campi";
@@ -54,7 +54,7 @@ export class HomeComponent {
   this.trackingResult = null;
 
   this.trackingSrv.track({
-    chiavediTracking: tracking,
+    chiaveConsegna: tracking,
     dataDiRitiro: parsedDate.toISOString()
   })
   .subscribe({
